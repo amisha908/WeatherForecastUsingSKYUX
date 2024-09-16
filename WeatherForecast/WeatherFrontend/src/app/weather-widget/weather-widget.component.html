@@ -1,0 +1,169 @@
+<div class="weather-container">
+  <sky-fluid-grid>
+    <sky-row>
+      <sky-column [screenSmall]="8" class="forecast-column">
+        <sky-box>
+          <sky-box-header class="box-header" style="text-align: center;">
+            <sky-fluid-grid>
+              <sky-row>
+                <sky-column [screenSmall]="6">
+                  <h1 class="section-title">Day Forecast</h1>
+                  <div class="topHeading">
+                    <p><strong style="font-size: 20px;">Latitude:</strong> {{ latitude }}</p>
+                    <p><strong style="font-size: 20px;">Longitude:</strong> {{ longitude }}</p>
+                    <p><strong style="font-size: 20px;">Your Region Timezone:</strong> {{ continent }}/{{city}} </p>
+                  </div>
+                  <button class="sky-btn sky-btn-icon" (click)="reloadPage()" aria-label="Reload">
+                    <i class="fas fa-map-marker-alt"></i> <!-- This is the location icon -->
+                  </button>
+                </sky-column>
+                <sky-column [screenSmall]="6" class="searchSection">
+                  <form #form="ngForm" (ngSubmit)="onSubmit()" novalidate>
+                    <div class="input-container">
+                      <sky-input-box data-sky-id="inputLatitude" labelText="Latitude" stacked="true">
+                        <input [(ngModel)]="coordinateForm.latitude" name="latitude" id="latitude" type="number"
+                          required (ngModelChange)="validateLatitude()" #latitudeField="ngModel" min="-90" max="90" />
+                        <div *ngIf="latitudeError" class="error">
+                          Latitude must be between -90 and 90.
+                        </div>
+                      </sky-input-box>
+                      <sky-input-box data-sky-id="inputLongitude" labelText="Longitude" stacked="true">
+                        <input [(ngModel)]="coordinateForm.longitude" name="longitude" id="longitude" type="number"
+                          required (ngModelChange)="validateLongitude()" #longitudeField="ngModel" min="-180"
+                          max="180" />
+                        <div *ngIf="longitudeError" class="error">
+                          Longitude must be between -180 and 180.
+                        </div>
+                      </sky-input-box>
+                      <button type="submit" class="sky-btn sky-btn-primary searchCood"
+                        [disabled]="latitudeError || longitudeError" [disabled]="form.invalid">
+                        Search
+                      </button>
+                    </div>
+                  </form>
+                  <form #form="ngForm" (ngSubmit)="onSubmitLocation()">
+                    <div class="input-container-Location" style="position: relative;">
+                      <sky-input-box data-sky-id="location" labelText="Location" stacked="true">
+                        <input [(ngModel)]="locationForm.location" name="location" id="location" type="text" required
+                          #name="ngModel" (input)="onLocationInput($event)" autocomplete="off" />
+                      </sky-input-box>
+                      <ul *ngIf="suggestions.length > 0" class="suggestions-list"
+                        style="position: absolute; z-index: 1000;">
+                        <li *ngFor="let suggestion of suggestions" (click)="selectSuggestion(suggestion)"
+                          class="suggestion-item">
+                          {{ suggestion.display_name }}
+                        </li>
+                      </ul>
+                      <button type="submit" class="sky-btn sky-btn-primary searchButton" [disabled]="form.invalid">
+                        Search
+                      </button>
+                    </div>
+                  </form>
+                </sky-column>
+              </sky-row>
+            </sky-fluid-grid>
+          </sky-box-header>
+          <sky-box-content>
+            <sky-fluid-grid *ngIf="weeklyForecast.length > 0">
+              <h3 class="weather-day">{{ weeklyForecast[selectedDayIndex]?.day }}</h3>
+              <div class="weather-summary">
+                <sky-row>
+                  <sky-column [screenSmall]="6" class="forecast-column">
+                    <div class="weather-info">
+                      <p><strong>Weather: </strong> <i
+                          class="wi {{ getWeatherIcon(weeklyForecast[selectedDayIndex]?.weatherCode) }}"></i></p>
+                    </div>
+                  </sky-column>
+                  <sky-column [screenSmall]="6" class="forecast-column">
+                    <div class="weather-info">
+                      <p><strong>Max Temp:</strong> {{ weeklyForecast[selectedDayIndex]?.tempMax }}°C</p>
+                      <p><strong>Min Temp:</strong> {{ weeklyForecast[selectedDayIndex]?.tempMin }}°C</p>
+                    </div>
+                  </sky-column>
+                </sky-row>
+                <sky-row>
+                  <sky-column [screenSmall]="6" class="forecast-column">
+                    <div class="weather-info">
+                      <p><strong>Max Apparent Temp:</strong> {{ weeklyForecast[selectedDayIndex]?.apparentTempMax }}°C
+                      </p>
+                      <p><strong>Min Apparent Temp:</strong> {{ weeklyForecast[selectedDayIndex]?.apparentTempMin }}°C
+                      </p>
+                      <p><strong>Relative Average Humidity:</strong> {{
+                        weeklyForecast[selectedDayIndex]?.averageHumidity }}%</p>
+                    </div>
+                  </sky-column>
+                  <sky-column [screenSmall]="6" class="forecast-column">
+                    <div class="weather-info">
+                      <p><strong>Precipitation Hours:</strong> {{ weeklyForecast[selectedDayIndex]?.precipitationHours
+                        }}</p>
+                      <p><strong>Max Precipitation Probability:</strong>
+                        {{ weeklyForecast[selectedDayIndex]?.precipitationProbabilityMax }}%</p>
+                      <p><strong>Total Precipitation:</strong> {{ weeklyForecast[selectedDayIndex]?.precipitationSum }}
+                        mm</p>
+                    </div>
+                  </sky-column>
+                </sky-row>
+                <sky-row>
+                  <sky-column [screenSmall]="6" class="forecast-column">
+                    <div class="weather-info">
+                      <p><strong>Sunrise:</strong> {{ weeklyForecast[selectedDayIndex]?.sunrise | date: 'shortTime' }}
+                      </p>
+                      <p><strong>Sunset:</strong> {{ weeklyForecast[selectedDayIndex]?.sunset | date: 'shortTime' }}</p>
+                    </div>
+                  </sky-column>
+                  <sky-column [screenSmall]="6" class="forecast-column">
+                    <div class="weather-info">
+                      <p><strong>Weather Code:</strong> {{ weeklyForecast[selectedDayIndex]?.weatherCode }}</p>
+                    </div>
+                  </sky-column>
+                </sky-row>
+              </div>
+            </sky-fluid-grid>
+          </sky-box-content>
+        </sky-box>
+        <sky-box>
+          <div class="hourly-forecast">
+            <sky-box-header class="box-header">
+              <h4>Hourly Forecast</h4>
+            </sky-box-header>
+            <div class="hourly-scroll">
+              <div class="hourly-wrapper">
+                <sky-box-content>
+                  <div *ngFor="let hour of hourlyForecast[selectedDayIndex]" class="hour-detail">
+                    <p><strong>Time:</strong> {{ hour.hour }}</p>
+                    <p><strong>Temperature:</strong> {{ hour.temp }}</p>
+                    <p><strong>Weather Code:</strong> {{ hour.weatherCode }}</p>
+                  </div>
+                </sky-box-content>
+              </div>
+            </div>
+          </div>
+        </sky-box>
+      </sky-column>
+      <sky-column [screenSmall]="4" class="sky-aligner">
+        <div class="weekly-forecast-section sky-aligner-item-fill">
+          <sky-box class="sky-aligner sky-aligner-item-fill">
+            <sky-box-header style="text-align: center;">
+              <h1 class="section-title">Weekly Forecast</h1>
+            </sky-box-header>
+            <sky-box-content class="sky-aligner-item-fill">
+              <sky-fluid-grid class="sky-aligner-item-fill" style="width: 100%;">
+                <sky-row class="sky-aligner-item-fill">
+                  <sky-column [screenSmall]="12" class="sky-aligner-item-fill">
+                    <div *ngIf="weeklyForecast.length > 0" class="week-container">
+                      <div *ngFor="let day of weeklyForecast; let i = index" (click)="selectDay(i)"
+                        [ngClass]="{'selected-day': selectedDayIndex === i, 'unselected-day': selectedDayIndex !== i}"
+                        class="day-container">
+                        <span class="day-text">{{ day.day }}</span>
+                      </div>
+                    </div>
+                  </sky-column>
+                </sky-row>
+              </sky-fluid-grid>
+            </sky-box-content>
+          </sky-box>
+        </div>
+      </sky-column>
+    </sky-row>
+  </sky-fluid-grid>
+</div>

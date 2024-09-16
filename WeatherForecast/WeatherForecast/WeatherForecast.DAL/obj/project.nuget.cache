@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "/2j2GEtZkkFlHntiRLJaiN9hkyjFpt7zpZQMEyJG00wIRj8MnGysbl5USnvZwAe9GcdT2K2C4QBnTrKZ85g4DA==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\amisha01\\OneDrive - Nagarro\\Desktop\\amisha\\WeatherForecast\\WeatherForecast\\WeatherForecast.DAL\\WeatherForecast.DAL.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\amisha01\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512"
+  ],
+  "logs": []
+}

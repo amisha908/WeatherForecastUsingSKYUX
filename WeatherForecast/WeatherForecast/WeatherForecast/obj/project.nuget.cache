@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "dgSpecHash": "064Kr6Itei6N+bCImRTNUWfpkqpLpUz3sXPz/OodNATyA5mU1i7JnbxwAe8BFUEyiXoGNRZm7wHmWdWMKaCN3A==",
+  "success": true,
+  "projectFilePath": "C:\\Users\\amisha01\\OneDrive - Nagarro\\Desktop\\amisha\\WeatherForecast\\WeatherForecast\\WeatherForecast\\WeatherForecast.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\amisha01\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\amisha01\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\amisha01\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\amisha01\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\amisha01\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\amisha01\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\amisha01\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
+  "logs": []
+}
